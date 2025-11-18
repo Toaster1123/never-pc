@@ -34,7 +34,7 @@ export const ProductItem: React.FC<TProduct> = ({
           от {formatPrice(price)} ₽
         </div>
         <p className="text-gray-700 leading-5 mt-1 line-clamp-2">
-          {descriptions[0]} ...
+          {descriptions}
         </p>
         <div
           className="mt-2 text-2xl flex items-center gap-1 text-amber-400"

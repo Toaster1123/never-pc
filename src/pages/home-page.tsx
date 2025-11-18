@@ -146,7 +146,7 @@ export const HomePage = () => {
         <div className="flex items-end justify-between mb-6">
           <h2 className="text-2xl font-semibold">Категории</h2>
           <Link to="/catalog" className="text-emerald-700 hover:underline">
-            Весь каталог
+            <span className="text-black text-lg">Весь каталог →</span>
           </Link>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
@@ -163,7 +163,9 @@ export const HomePage = () => {
                   className="w-full h-full object-contain group-hover:scale-105 transition"
                 />
               </div>
-              <div className="p-3 text-center font-medium">{c.name}</div>
+              <div className="p-3 text-center text-black font-medium">
+                {c.name}
+              </div>
             </Link>
           ))}
         </div>
@@ -187,8 +189,10 @@ export const HomePage = () => {
                   />
                 </div>
                 <div className="p-4">
-                  <div className="font-medium line-clamp-2">{p.title}</div>
-                  <div className="mt-1 text-lg font-semibold">
+                  <div className="font-medium text-neutral-600/90 line-clamp-2">
+                    {p.title}
+                  </div>
+                  <div className="mt-1 text-lg text-black font-semibold">
                     {formatPrice(p.price)}
                   </div>
                   <div className="mt-3 text-sm text-emerald-700">
