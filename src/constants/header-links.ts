@@ -3,4 +3,5 @@ export const headerLinks = [
   { name: "Каталог", link: "/catalog" },
   { name: "О нас", link: "/about" },
   { name: "Услуги", link: "/servise" },
+  { name: "Прайс-лист", link: "/price" },
 ];

@@ -12,6 +12,7 @@ export type TProduct = {
   size: number;
   details: TBigDescriptionItem[];
   type?: string;
+  review: number;
 };
 
 export type TPcCategory = {

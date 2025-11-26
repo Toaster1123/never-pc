@@ -9,11 +9,11 @@ export function ProductDetailsTable({ details }: { details: Detail[] }) {
             <tr key={i} className="align-top">
               <th
                 scope="row"
-                className="w-48 pr-4 text-left text-gray-500 font-medium"
+                className="w-56 pr-6 text-left text-emerald-300 font-semibold text-lg"
               >
                 {component}:
               </th>
-              <td className="text-gray-900 leading-6 break-words">
+              <td className="text-gray-200 leading-6 break-words text-base">
                 {description}
               </td>
             </tr>

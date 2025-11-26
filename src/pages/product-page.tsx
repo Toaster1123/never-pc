@@ -5,32 +5,50 @@ import { Link, useParams } from "react-router-dom";
 
 export const ProductPage = () => {
   const { id } = useParams();
-
   const { product, loading } = useFetchProduct(Number(id));
 
   if (!product && !loading) {
-    return <div className="">Такой страницы не существует 😅</div>;
+    return (
+      <div className="text-center text-gray-200 py-24 bg-neutral-900">
+        Такой страницы не существует 😅
+      </div>
+    );
   }
-  console.log(product);
+
   return (
-    <div className="w-full">
+    <div className="w-full bg-neutral-900 text-gray-100 min-h-screen">
       <Link to="/catalog">
-        <div className="flex w-fit ml-6 text-black py-2 rounded-xl px-4 my-6 transition-all items-center gap-2 text-xl cursor-pointer">
+        <div
+          className="flex w-fit ml-8 my-8 px-6 py-3 items-center gap-2 text-xl cursor-pointer
+          rounded-xl bg-gradient-to-r from-blue-900 to-blue-700 text-white font-semibold shadow-md hover:from-blue-800 hover:to-blue-900 transition"
+        >
           <CircleChevronLeft size={28} />
           Каталог
         </div>
       </Link>
-      <div className="flex px-10 gap-16">
-        <div className="w-1/2 flex flex-col  items-center">
-          <ProductPageImage
-            loading={loading}
-            image={product ? product.image : ""}
-          />
+
+      <div
+        className="flex flex-col md:flex-row gap-14 px-8 py-12 mx-auto max-w-[1400px]
+  bg-gradient-to-br from-[#171821] via-[#111118] to-[#0b0c12]
+  rounded-3xl shadow-[0_25px_80px_rgba(0,0,0,0.9)]
+  border border-zinc-800/80"
+      >
+        <div className="md:w-[55%] w-full flex flex-col items-center pb-8">
+          <div className="w-full flex justify-center">
+            <ProductPageImage
+              loading={loading}
+              image={product ? product.image : ""}
+            />
+          </div>
         </div>
-        <ProductDesc productItem={product} loading={loading} />
+        <div className="md:w-[45%] w-full flex flex-col justify-center px-8">
+          <ProductDesc productItem={product} loading={loading} />
+        </div>
       </div>
-      <div className="flex w-full gap-10 px-10 my-20 justify-center ">
-        <div className="flex max-w-1/3 items-center flex-col gap-y-5">
+
+      <div className="flex flex-col md:flex-row w-full gap-10 px-8 py-12 mt-12 max-w-[1100px] mx-auto justify-center">
+        <div className="flex flex-col items-center gap-y-5 w-full md:max-w-[500px] bg-gradient-to-br from-emerald-700 to-emerald-400 rounded-2xl p-8 shadow-lg border border-zinc-800/50 relative transition">
+          <div className="absolute -top-4 -right-4 w-16 h-16 bg-emerald-300/20 rounded-full blur-2xl z-0" />
           {loading ? (
             <>
               <TextSceleton className="h-9 w-80" />
@@ -38,22 +56,29 @@ export const ProductPage = () => {
             </>
           ) : (
             <>
-              <p className="text-3xl font-bold">Рассрочка</p>
-              <p className="text-xl text-center">
-                Вы так же можете ознакомится с нашей программой рассрочки,
-                которая поможет вам сэкономить на автомобиле
+              <h3 className="text-2xl font-bold text-white drop-shadow">
+                Рассрочка
+              </h3>
+              <p className="text-lg text-center text-gray-100 drop-shadow">
+                Воспользуйтесь нашей программой рассрочки — покупайте выгодно и
+                удобно.
               </p>
             </>
           )}
-
-          <Link to={`/servise`}>
-            <button className="flex text-black items-center gap-2 px-3 py-2 justify-between border-2 border-black hover:bg-green-700 hover:text-white hover:border-transparent">
-              <p className="whitespace-nowrap">Подробнее</p>
+          <Link to="/servise" className="mt-3 w-full z-10">
+            <button
+              className="flex items-center justify-center gap-2 px-4 py-3 w-full
+              bg-neutral-900/80 border border-emerald-300 rounded-xl font-semibold text-emerald-300
+              shadow-md hover:bg-emerald-900 hover:text-white hover:border-emerald-400 transition"
+            >
+              <span className="whitespace-nowrap">Подробнее</span>
               <ArrowRight size={20} />
             </button>
           </Link>
         </div>
-        <div className="flex max-w-1/3 items-center flex-col gap-y-5">
+
+        <div className="flex flex-col items-center gap-y-5 w-full md:max-w-[500px] bg-gradient-to-br from-blue-700 to-blue-400 rounded-2xl p-8 shadow-lg border border-zinc-800/50 relative transition">
+          <div className="absolute -top-4 -right-4 w-16 h-16 bg-blue-300/20 rounded-full blur-2xl z-0" />
           {loading ? (
             <>
               <TextSceleton className="h-9 w-80" />
@@ -61,17 +86,22 @@ export const ProductPage = () => {
             </>
           ) : (
             <>
-              <p className="text-3xl font-bold ">Услуги</p>
-              <p className="text-xl text-center">
-                Если вы хотите узнать про условия гарантии, Тех. обслуживание,
-                то вы можете ознакомиться с нашими услугами
+              <h3 className="text-2xl font-bold text-white drop-shadow">
+                Услуги
+              </h3>
+              <p className="text-lg text-center text-gray-100 drop-shadow">
+                Гарантии, тех. обслуживание, поддержка 24/7: выберите услугу,
+                которая подходит именно вам.
               </p>
             </>
           )}
-
-          <Link to={`/servise`}>
-            <button className="flex text-black items-center gap-2 px-3 py-2 justify-between border-2 border-black hover:bg-green-700 hover:text-white hover:border-transparent">
-              <p className="whitespace-nowrap">Подробнее</p>
+          <Link to="/servise" className="mt-3 w-full z-10">
+            <button
+              className="flex items-center justify-center gap-2 px-4 py-3 w-full
+              bg-neutral-900/80 border border-blue-300 rounded-xl font-semibold text-blue-300
+              shadow-md hover:bg-blue-900 hover:text-white hover:border-blue-400 transition"
+            >
+              <span className="whitespace-nowrap">Подробнее</span>
               <ArrowRight size={20} />
             </button>
           </Link>

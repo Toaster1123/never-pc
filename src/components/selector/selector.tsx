@@ -26,8 +26,8 @@ export const Selector: React.FC<Props> = ({
       >
         <button
           className={cn(
-            "bg-white border hover:border-blue-500! border-gray-300 rounded px-4 py-2 flex items-center justify-between w-full min-w-44",
-            !open && "text-gray-500"
+            "bg-neutral-700 border text-neutral-200 hover:border-neutral-800! border-neutral-700 rounded px-4 py-2 flex items-center justify-between w-full min-w-44",
+            !open && "text-neutral-300"
           )}
         >
           <span>{selectedItem || "Все товары"}</span>
@@ -44,9 +44,9 @@ export const Selector: React.FC<Props> = ({
         </button>
 
         {open && (
-          <ul className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-300 rounded shadow-lg z-10 max-h-96 overflow-y-auto min-w-44 selector-slider">
+          <ul className="absolute top-full left-0 text-neutral-300 right-0 mt-1 bg-neutral-600 border border-neutral-600 rounded shadow-lg z-10 max-h-96 overflow-y-auto min-w-44 selector-slider">
             <li
-              className="px-4 py-2 cursor-pointer hover:bg-gray-100"
+              className="px-4 py-2 cursor-pointer hover:bg-neutral-700"
               onClick={() => setSelect(null)}
             >
               Все товары
@@ -55,7 +55,7 @@ export const Selector: React.FC<Props> = ({
               <li
                 key={index}
                 onClick={() => setSelect(item)}
-                className="px-4 py-2 cursor-pointer hover:bg-gray-100"
+                className="px-4 py-2 cursor-pointer hover:bg-neutral-700"
               >
                 {item}
               </li>

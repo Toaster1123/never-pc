@@ -43,30 +43,34 @@ export const AboutPage = () => {
       <section className="mx-auto max-w-7xl px-4 py-12">
         <div className="flex items-baseline justify-between mb-6">
           <div>
-            <span className="inline-block text-xs tracking-wide px-2 py-1 rounded-full bg-emerald-100 text-emerald-700">
+            <span className="inline-block text-xs tracking-wide px-2 py-1 rounded-full bg-emerald-900/40 text-emerald-300">
               О компании
             </span>
-            <h2 className="text-2xl font-semibold mt-2">Почему нас выбирают</h2>
-            <p className="text-zinc-600 mt-1">
-              Фокус на сервисе, скорости и предсказуемой качестве сборок.
+            <h2 className="text-2xl font-semibold mt-2 text-gray-100">
+              Почему нас выбирают
+            </h2>
+            <p className="text-zinc-400 mt-1">
+              Фокус на сервисе, скорости и предсказуемом качестве сборок.
             </p>
           </div>
           <Link
             to="/catalog"
-            className="hidden sm:inline-block text-emerald-700 hover:underline"
+            className="hidden sm:inline-block text-emerald-300 hover:text-emerald-200 transition"
           >
             Смотреть каталог →
           </Link>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <article className="cursor-default group rounded-2xl border border-zinc-200 bg-zinc-900 text-zinc-50 p-5 hover:shadow-xl transition">
+          <article className="cursor-default group rounded-2xl border border-zinc-800 bg-gradient-to-br from-[#171821] via-[#101018] to-[#0b0c12] text-zinc-50 p-5 hover:shadow-xl hover:border-emerald-500/40 transition">
             <div className="flex gap-4">
-              <div className="h-12 w-12 rounded-xl bg-emerald-600/20 flex items-center justify-center text-2xl">
+              <div className="h-12 w-12 rounded-xl bg-emerald-500/15 flex items-center justify-center text-2xl">
                 🚚
               </div>
               <div className="flex-1">
-                <h3 className="font-semibold">Доставка за 24 часа</h3>
+                <h3 className="font-semibold text-gray-100">
+                  Доставка за 24 часа
+                </h3>
                 <p className="mt-1 text-zinc-300 text-sm leading-6">
                   Экспресс по городу и ускоренная логистика по РФ. Статусы
                   заказа в личном кабинете.
@@ -78,18 +82,20 @@ export const AboutPage = () => {
             </div>
           </article>
 
-          <article className="cursor-default group rounded-2xl border border-zinc-200 bg-white p-5 hover:shadow-xl transition">
+          <article className="cursor-default group rounded-2xl border border-zinc-800 bg-gradient-to-br from-[#171821] via-[#101018] to-[#0b0c12] text-zinc-50 p-5 hover:shadow-xl hover:border-emerald-500/40 transition">
             <div className="flex gap-4">
-              <div className="h-12 w-12 rounded-xl bg-emerald-600/10 flex items-center justify-center text-2xl">
+              <div className="h-12 w-12 rounded-xl bg-emerald-500/15 flex items-center justify-center text-2xl">
                 🛡️
               </div>
               <div className="flex-1">
-                <h3 className="font-semibold">Гарантия + стресс‑тесты</h3>
-                <p className="mt-1 text-zinc-600 text-sm leading-6">
+                <h3 className="font-semibold text-gray-100">
+                  Гарантия + стресс‑тесты
+                </h3>
+                <p className="mt-1 text-zinc-300 text-sm leading-6">
                   AIDA/OCCT, обновление BIOS и драйверов. Гарантия до 3 лет с
                   расширением.
                 </p>
-                <ul className="mt-2 text-sm text-zinc-700 list-disc pl-5">
+                <ul className="mt-2 text-sm text-zinc-300 list-disc pl-5">
                   <li>Тихий термопрофиль вентиляторов</li>
                   <li>Проверка совместимости и питания</li>
                 </ul>
@@ -97,24 +103,26 @@ export const AboutPage = () => {
             </div>
           </article>
 
-          <article className="cursor-default group rounded-2xl border border-zinc-200 bg-white p-5 hover:shadow-xl transition">
+          <article className="cursor-default group rounded-2xl border border-zinc-800 bg-gradient-to-br from-[#171821] via-[#101018] to-[#0b0c12] text-zinc-50 p-5 hover:shadow-xl hover:border-emerald-500/40 transition">
             <div className="flex gap-4">
-              <div className="h-12 w-12 rounded-xl bg-emerald-600/10 flex items-center justify-center text-2xl">
+              <div className="h-12 w-12 rounded-xl bg-emerald-500/15 flex items-center justify-center text-2xl">
                 ♻️
               </div>
               <div className="flex-1">
-                <h3 className="font-semibold">Trade‑In без лишних вопросов</h3>
-                <p className="mt-1 text-zinc-600 text-sm leading-6">
+                <h3 className="font-semibold text-gray-100">
+                  Trade‑In без лишних вопросов
+                </h3>
+                <p className="mt-1 text-zinc-300 text-sm leading-6">
                   Честная оценка старых комплектующих в зачёт новой покупки.
                 </p>
-                <div className="mt-3 flex gap-2">
-                  <span className="px-2 py-1 rounded bg-zinc-100 text-zinc-700 text-xs">
+                <div className="mt-3 flex gap-2 flex-wrap">
+                  <span className="px-2 py-1 rounded bg-zinc-800 text-zinc-200 text-xs">
                     GPU
                   </span>
-                  <span className="px-2 py-1 rounded bg-zinc-100 text-zinc-700 text-xs">
+                  <span className="px-2 py-1 rounded bg-zinc-800 text-zinc-200 text-xs">
                     Платы
                   </span>
-                  <span className="px-2 py-1 rounded bg-zinc-100 text-zinc-700 text-xs">
+                  <span className="px-2 py-1 rounded bg-zinc-800 text-zinc-200 text-xs">
                     Периферия
                   </span>
                 </div>
@@ -122,13 +130,13 @@ export const AboutPage = () => {
             </div>
           </article>
 
-          <article className="cursor-default group rounded-2xl border border-zinc-200 bg-zinc-900 text-zinc-50 p-5 hover:shadow-xl transition">
+          <article className="cursor-default group rounded-2xl border border-zinc-800 bg-gradient-to-br from-[#171821] via-[#101018] to-[#0b0c12] text-zinc-50 p-5 hover:shadow-xl hover:border-emerald-500/40 transition">
             <div className="flex gap-4">
-              <div className="h-12 w-12 rounded-xl bg-emerald-600/20 flex items-center justify-center text-2xl">
+              <div className="h-12 w-12 rounded-xl bg-emerald-500/15 flex items-center justify-center text-2xl">
                 🎧
               </div>
               <div className="flex-1">
-                <h3 className="font-semibold">Поддержка 24/7</h3>
+                <h3 className="font-semibold text-gray-100">Поддержка 24/7</h3>
                 <p className="mt-1 text-zinc-300 text-sm leading-6">
                   Быстрые ответы в мессенджерах, помощь с подбором и настройкой.
                 </p>
@@ -143,9 +151,11 @@ export const AboutPage = () => {
       </section>
 
       <section className="mx-auto max-w-7xl px-4 pb-8">
-        <div className="rounded-3xl border border-zinc-200 bg-white p-6">
-          <h3 className="text-xl font-semibold mb-3">Немного о нас</h3>
-          <p className="text-zinc-700 leading-7">
+        <div className="rounded-3xl border border-zinc-800 bg-gradient-to-br from-[#171821] via-[#101018] to-[#0b0c12] p-6 md:p-8 shadow-xl">
+          <h3 className="text-xl font-semibold mb-3 text-emerald-300">
+            Немного о нас
+          </h3>
+          <p className="text-zinc-300 leading-7 text-sm md:text-base">
             Мы верим, что компьютер должен быть инструментом под ваши задачи: от
             учебы и работы до стриминга и продакшена. Перед отгрузкой мы
             обновляем BIOS, ставим необходимые драйверы и проверяем
@@ -156,9 +166,9 @@ export const AboutPage = () => {
         </div>
       </section>
 
-      <section className="bg-zinc-50">
+      <section className="bg-neutral-900">
         <div className="mx-auto max-w-7xl px-4 py-12 grid md:grid-cols-2 gap-6 items-start">
-          <div className="rounded-3xl overflow-hidden border border-zinc-200 bg-white">
+          <div className="rounded-3xl overflow-hidden border border-zinc-800 bg-[#101018] shadow-xl">
             <iframe
               title="NEVERPC на карте"
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d959.6933796693038!2d36.586142006619625!3d55.10367162246032!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46cad28a545f83eb%3A0x5579b05d653a0009!2z0J7QsdC90LjQvdGB0LrQuNC5INC40L3QtNGD0YHRgtGA0LjQsNC70YzQvdGL0Lkg0YLQtdGF0L3QuNC60YPQvCDQv9C-0YHRgtGA0L7QtdC90L3Ri9C5INCyINGH0LXRgdGC0Ywg0L7Qs9GA0L7QvNC90L7QuSDQu9GO0LHQstC4INC6INCb0Y7QsdC1!5e0!3m2!1sru!2sru!4v1709627220303!5m2!1sru!2sru"
@@ -171,13 +181,13 @@ export const AboutPage = () => {
             />
           </div>
           <div>
-            <h3 className="text-xl font-semibold">Контакты</h3>
-            <ul className="mt-3 space-y-2 text-zinc-700">
+            <h3 className="text-xl font-semibold text-gray-100">Контакты</h3>
+            <ul className="mt-3 space-y-2 text-zinc-300">
               <li>г. Обнинск, ул. Самсоновский проезд, 8</li>
               <li>
                 <a
                   href="tel:+79997359999"
-                  className="text-emerald-700 hover:underline"
+                  className="text-emerald-300 hover:text-emerald-200 transition"
                 >
                   +7 (999) 735‑99‑99
                 </a>
@@ -185,7 +195,7 @@ export const AboutPage = () => {
               <li>
                 <a
                   href="mailto:neverpcinfo@gmail.com"
-                  className="text-emerald-700 hover:underline"
+                  className="text-emerald-300 hover:text-emerald-200 transition"
                 >
                   neverpcinfo@gmail.com
                 </a>
@@ -199,7 +209,7 @@ export const AboutPage = () => {
                   href={s.href}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center justify-center rounded-xl border border-zinc-300 hover:bg-zinc-100 p-2.5"
+                  className="inline-flex items-center justify-center rounded-xl border border-zinc-300 bg-zinc-100 hover:bg-zinc-200 p-2.5"
                   aria-label={s.alt}
                   title={s.alt}
                 >

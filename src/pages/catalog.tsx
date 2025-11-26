@@ -25,10 +25,9 @@ export const Catalog = () => {
 
   return (
     <div className="w-full flex flex-col mb-16">
-      <div className="select-none py-2 flex gap-5 border-b px-20 mb-4 z-40">
-        {/* <div className="text-2xl">Категории</div> */}
+      <div className="select-none py-2 flex gap-5 border-b border-neutral-500 px-20 mb-4 z-40">
         <div className="flex items-center gap-2">
-          <p>Тип товара:</p>
+          <p className="text-white">Тип товара:</p>
           <Selector
             selectedItem={selectedItem}
             setSelect={setSelectedItem}
@@ -36,35 +35,30 @@ export const Catalog = () => {
           />
         </div>
       </div>
-      <div className="flex flex-col gap-10 px-20">
-        {loading || !pcFetchData
-          ? [...Array(15)].map((_, id) => (
-              <div key={id} className="w-72 h-80">
-                <div className="w-full h-56 rounded-xl bg-gray-300 animate-pulse" />
-                <div className="w-full mt-2 h-7 rounded-md bg-gray-300 animate-pulse" />
-                <div className="w-full mt-2 h-9 rounded-md bg-gray-300 animate-pulse" />
-              </div>
-            ))
-          : sections.map((section) => (
-              <div className="flex flex-col w-full mb-20" key={section.id}>
-                <h2 className="text-3xl font-semibold mb-4">{section.name}</h2>
-                <div className="flex flex-wrap gap-6">
-                  {section.products.map((item, id) => (
-                    <ProductItem
-                      key={id}
-                      id={item.id}
-                      title={item.title}
-                      image={item.image}
-                      price={item.price}
-                      details={item.details}
-                      descriptions={item.descriptions}
-                      size={item.size}
-                      type={item.type}
-                    />
-                  ))}
-                </div>
-              </div>
+      <div className="flex flex-col gap-14 px-4 md:px-20 mt-6">
+        {loading || !pcFetchData ? (
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-10">
+            {[...Array(12)].map((_, id) => (
+              <div
+                key={id}
+                className="w-full h-80 bg-zinc-200 rounded-2xl animate-pulse"
+              />
             ))}
+          </div>
+        ) : (
+          sections.map((section) => (
+            <div key={section.id} className="mb-16">
+              <h2 className="text-3xl font-extrabold mb-8 text-emerald-700 text-left">
+                {section.name}
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-10 justify-center">
+                {section.products.map((item, id) => (
+                  <ProductItem {...item} key={id} />
+                ))}
+              </div>
+            </div>
+          ))
+        )}
       </div>
     </div>
   );

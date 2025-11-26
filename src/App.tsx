@@ -8,6 +8,7 @@ import { AuthPage } from "./pages/auth-page";
 import { PersonalPage } from "./pages/personal-page";
 import { ProductPage } from "./pages/product-page";
 import { AboutPage } from "./pages/about-page";
+import { PriceListPage } from "./pages/price-list-page";
 
 function App() {
   const location = useLocation();
@@ -17,7 +18,7 @@ function App() {
   }, [location]);
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-neutral-900">
       <Header />
       <main className="flex-grow">
         <Routes>
@@ -72,6 +73,10 @@ function App() {
           <Route
             path="/personal-page"
             element={<div className="flex-grow">{<PersonalPage />}</div>}
+          />
+          <Route
+            path="/price"
+            element={<div className="flex-grow">{<PriceListPage />}</div>}
           />
         </Routes>
       </main>

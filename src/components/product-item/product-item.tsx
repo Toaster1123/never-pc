@@ -1,7 +1,15 @@
-// src/components/ProductItem.tsx
 import { TProduct } from "@/@types";
 import { formatPrice } from "@/lib";
 import { Link } from "react-router-dom";
+
+function declensionReview(count: number) {
+  count = Math.abs(count) % 100;
+  const lastDigit = count % 10;
+  if (count > 10 && count < 20) return "отзывов";
+  if (lastDigit > 1 && lastDigit < 5) return "отзыва";
+  if (lastDigit === 1) return "отзыв";
+  return "отзывов";
+}
 
 export const ProductItem: React.FC<TProduct> = ({
   id,
@@ -9,42 +17,49 @@ export const ProductItem: React.FC<TProduct> = ({
   image,
   price,
   size,
-  descriptions,
+  review,
 }) => {
   return (
-    <div className="w-72 border rounded-lg p-3 flex flex-col hover:shadow-2xl duration-300 bg-white">
-      <Link to={`/product/${id}`}>
-        <div className="h-56 overflow-hidden rounded-xl bg-gray-50 flex items-center justify-center">
+    <Link
+      to={`/product/${id}`}
+      className="block hover:-translate-y-1 duration-200"
+    >
+      <div className="w-full max-w-[330px] min-h-[520px] h-[520px] bg-neutral-900 border border-zinc-700 shadow-md rounded-3xl p-6 flex flex-col gap-4 transition hover:shadow-2xl cursor-pointer">
+        <div className="h-52 aspect-video rounded-2xl bg-zinc-800 flex items-center justify-center overflow-hidden mb-2">
           {image ? (
             <img
               src={image}
               alt={title}
-              className="w-full h-full object-contain"
+              className="max-h-full max-w-full object-contain"
             />
           ) : (
-            <div className="w-full h-full flex items-center justify-center text-gray-500">
-              No image
-            </div>
+            <span className="text-gray-400">Нет изображения</span>
           )}
         </div>
-      </Link>
-      <div className="pt-2">
-        <h5 className="font-medium line-clamp-2">{title}</h5>
-        <div className="font-semibold text-lg mt-1">
-          от {formatPrice(price)} ₽
+        <h4 className="font-bold text-xl text-gray-100 mb-1 line-clamp-2">
+          {title}
+        </h4>
+        <div className="font-extrabold text-2xl text-emerald-400">
+          {formatPrice(price)} ₽
         </div>
-        <p className="text-gray-700 leading-5 mt-1 line-clamp-2">
-          {descriptions}
-        </p>
-        <div
-          className="mt-2 text-2xl flex items-center gap-1 text-amber-400"
-          aria-label={`Мощность: ${size} из 5`}
-        >
-          {Array.from({ length: 5 }).map((_, i) => (
-            <span key={i}>{i < size ? "★" : "☆"}</span>
-          ))}
+        <div className="flex space-x-2 items-center">
+          <div
+            className="flex gap-1 text-yellow-400 text-lg"
+            aria-label={`Мощность: ${size} из 5`}
+          >
+            {Array.from({ length: 5 }).map((_, i) => (
+              <span key={i}>{i < size ? "★" : "☆"}</span>
+            ))}
+          </div>
+          <span className="text-zinc-400 text-md">
+            {review} {declensionReview(review)}
+          </span>
         </div>
+        <div className="flex-grow" />
+        <button className="mt-4 w-full py-3 rounded-xl font-bold bg-gradient-to-r from-emerald-700 to-blue-700 text-white shadow hover:from-emerald-900 hover:to-blue-900 transition">
+          К товару
+        </button>
       </div>
-    </div>
+    </Link>
   );
 };

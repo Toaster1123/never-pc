@@ -7,14 +7,16 @@ interface Props {
 }
 
 export const LoginBtn: React.FC<Props> = ({ mode, currentMode, onClick }) => {
+  const isActive = currentMode === mode;
+
   return (
     <button
       onClick={onClick}
-      className={`px-3 py-1 rounded-xl transition ${
-        currentMode === mode
-          ? "bg-sky-300 text-black"
-          : "bg-neutral-200/80 text-neutral-600"
-      }`}
+      className={
+        isActive
+          ? "px-4 py-2 rounded-xl bg-emerald-600 text-white font-semibold shadow-md transition"
+          : "px-4 py-2 rounded-xl bg-zinc-800 text-zinc-300 hover:bg-zinc-700 transition"
+      }
     >
       {mode === "login" ? "Войти" : "Регистрация"}
     </button>

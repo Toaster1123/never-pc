@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
-import { BuyModal } from '../buy-modal';
+import React, { useState } from "react";
+import { BuyModal } from "../buy-modal";
 
 interface Props {
   buttons: string[];
   loading?: boolean;
 }
+
 export const ModalButton: React.FC<Props> = ({ loading = false, buttons }) => {
   const [openModal, setOpenModal] = useState(false);
 
@@ -15,7 +16,7 @@ export const ModalButton: React.FC<Props> = ({ loading = false, buttons }) => {
           {[...Array(3)].map((_, id) => (
             <div
               key={id}
-              className="animate-pulse w-24 h-11 rounded-md flex items-center justify-center bg-gray-300"
+              className="animate-pulse w-24 h-11 rounded-lg flex items-center justify-center bg-zinc-800"
             />
           ))}
         </div>
@@ -25,11 +26,13 @@ export const ModalButton: React.FC<Props> = ({ loading = false, buttons }) => {
             <button
               key={id}
               onClick={() => setOpenModal(true)}
-              className="flex w-full items-center h-fit gap-2 px-3 py-2 justify-between border-2 border-black hover:bg-green-700 hover:text-white hover:border-transparent">
-              <p className="whitespace-nowrap">{button}</p>
+              className="flex w-full items-center gap-2 px-4 py-3 font-semibold rounded-xl
+                bg-gradient-to-r from-emerald-700 to-blue-700 text-gray-100
+                border-0 shadow-md hover:from-emerald-900 hover:to-blue-900 hover:text-white transition"
+            >
+              <span className="whitespace-nowrap">{button}</span>
             </button>
           ))}
-
           {openModal && <BuyModal closeModal={() => setOpenModal(false)} />}
         </div>
       )}
