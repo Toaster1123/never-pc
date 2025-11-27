@@ -5,3 +5,4 @@ export { MainImg } from "./main-img";
 export { ReadyLinks } from "./ready-links";
 export { Slider } from "./slider";
 export { WeekHit } from "./week-hit";
+export { OftenQuestions } from "./often-questions";

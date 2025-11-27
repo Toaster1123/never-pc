@@ -51,38 +51,69 @@ export const PriceListPage = () => {
   }, [pcFetchData, loading]);
 
   return (
-    <div className="flex items-center justify-center py-10 w-full">
+    <div className="w-full min-h-screen bg-neutral-900 flex items-center justify-center py-10 px-4">
       {!loading && allProducts.length > 0 ? (
-        <div className="w-full max-w-4xl">
-          <Table aria-label="price-table" className="border w-full">
-            <TableHeader className="text-start">
-              <TableColumn className="w-44 border-b">Название</TableColumn>
-              <TableColumn className="w-44 border-b">Тип</TableColumn>
-              <TableColumn className="w-44 border-b">Цена ₽</TableColumn>
-            </TableHeader>
-            <TableBody>
-              {allProducts.map((product, id) => (
-                <TableRow className="not-last:border-b" key={id}>
-                  <TableCell className="border-r">{product.title}</TableCell>
-                  <TableCell className="border-r">{product.type}</TableCell>
-                  <TableCell className="border-r">
-                    {product.price.toLocaleString("ru-RU")}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-          <div className="mt-5 flex w-full justify-end">
+        <div className="w-full max-w-5xl rounded-3xl border border-zinc-800 bg-gradient-to-br from-[#171821] via-[#101018] to-[#05060a] p-6 shadow-2xl">
+          <div className="flex items-center justify-between mb-5">
+            <div>
+              <p className="text-xs uppercase tracking-[0.18em] text-emerald-400">
+                прайс-лист
+              </p>
+              <h1 className="text-2xl font-semibold text-gray-100 mt-1">
+                Актуальные цены
+              </h1>
+              <p className="text-sm text-zinc-400 mt-1">
+                Все позиции каталога в одном списке. Обновление автоматически.
+              </p>
+            </div>
             <button
               onClick={handleDownload}
-              className="py-2 px-4 bg-lime-600/80 text-white hover:bg-lime-600/60"
+              className="py-2.5 px-4 rounded-xl bg-gradient-to-r from-emerald-700 to-blue-700 text-white text-sm font-semibold hover:from-emerald-800 hover:to-blue-900 transition shadow-md"
             >
-              Скачать
+              Скачать .docx
             </button>
+          </div>
+
+          <div className="overflow-hidden rounded-2xl border border-zinc-800 bg-neutral-900/60">
+            <Table
+              aria-label="price-table"
+              removeWrapper
+              className="w-full text-gray-100"
+            >
+              <TableHeader className="bg-neutral-900/80">
+                <TableColumn className="w-1/2 border-b border-zinc-800 text-left text-sm font-semibold text-zinc-300 px-4 py-3">
+                  Название
+                </TableColumn>
+                <TableColumn className="w-1/4 border-b border-zinc-800 text-left text-sm font-semibold text-zinc-300 px-4 py-3">
+                  Тип
+                </TableColumn>
+                <TableColumn className="w-1/4 border-b border-zinc-800 text-right text-sm font-semibold text-zinc-300 px-4 py-3">
+                  Цена, ₽
+                </TableColumn>
+              </TableHeader>
+              <TableBody>
+                {allProducts.map((product) => (
+                  <TableRow
+                    key={product.id}
+                    className="border-t border-zinc-800 hover:bg-neutral-800/60 transition"
+                  >
+                    <TableCell className="px-4 py-3 text-sm text-gray-100">
+                      {product.title}
+                    </TableCell>
+                    <TableCell className="px-4 py-3 text-sm text-zinc-300">
+                      {product.type}
+                    </TableCell>
+                    <TableCell className="px-4 py-3 text-sm text-emerald-400 text-right">
+                      {product.price.toLocaleString("ru-RU")}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
           </div>
         </div>
       ) : (
-        <TextSceleton className="w-1/3 h-full" />
+        <TextSceleton className="w-1/3 h-14" />
       )}
     </div>
   );

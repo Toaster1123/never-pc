@@ -3,6 +3,7 @@ import {
   Brands,
   Categories,
   MainImg,
+  OftenQuestions,
   ReadyLinks,
   Slider,
   WeekHit,
@@ -13,8 +14,9 @@ export const HomePage = () => {
     <main className="w-full">
       <MainImg />
       <Slider />
-      <Categories />
       <WeekHit />
+      <Categories />
+      <OftenQuestions />
       <AboutInfo />
       <Brands />
       <ReadyLinks />

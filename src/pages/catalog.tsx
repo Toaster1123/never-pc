@@ -1,6 +1,5 @@
 import { ProductItem, Selector } from "@/components";
 import { useFetchProductList } from "@/hooks";
-
 import { useEffect, useMemo, useState } from "react";
 
 export const Catalog = () => {
@@ -10,24 +9,24 @@ export const Catalog = () => {
     "Комплектующие",
   ]);
   const { loading, pcFetchData } = useFetchProductList();
+
   const sections = useMemo(() => {
     if (loading || !pcFetchData) return [];
-
     if (selectedItem === null) return pcFetchData;
     return pcFetchData.filter((s) => s.name === selectedItem);
   }, [loading, pcFetchData, selectedItem]);
-  console.log(pcFetchData);
+
   useEffect(() => {
     if (pcFetchData) {
       setcategoryList(pcFetchData.map((item) => item.name));
     }
-  }, [loading, pcFetchData]);
+  }, [pcFetchData]);
 
   return (
     <div className="w-full flex flex-col mb-16">
-      <div className="select-none py-2 flex gap-5 border-b border-neutral-500 px-20 mb-4 z-40">
-        <div className="flex items-center gap-2">
-          <p className="text-white">Тип товара:</p>
+      <div className="select-none py-4 flex gap-5 border-b border-neutral-700 px-4 md:px-20 mb-6 z-40">
+        <div className="flex items-center gap-3">
+          <p className="text-white text-sm md:text-base">Тип товара:</p>
           <Selector
             selectedItem={selectedItem}
             setSelect={setSelectedItem}
@@ -35,28 +34,31 @@ export const Catalog = () => {
           />
         </div>
       </div>
-      <div className="flex flex-col gap-14 px-4 md:px-20 mt-6">
+
+      <div className="flex flex-col gap-10 px-4 md:px-16 mt-2">
         {loading || !pcFetchData ? (
-          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-10">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {[...Array(12)].map((_, id) => (
               <div
                 key={id}
-                className="w-full h-80 bg-zinc-200 rounded-2xl animate-pulse"
+                className="h-80 bg-zinc-800 rounded-2xl animate-pulse"
               />
             ))}
           </div>
         ) : (
           sections.map((section) => (
-            <div key={section.id} className="mb-16">
-              <h2 className="text-3xl font-extrabold mb-8 text-emerald-700 text-left">
+            <section key={section.id} className="mb-10">
+              <h2 className="text-2xl md:text-3xl font-bold mb-5 text-emerald-300">
                 {section.name}
               </h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-10 justify-center">
-                {section.products.map((item, id) => (
-                  <ProductItem {...item} key={id} />
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                {section.products.map((item) => (
+                  <div key={item.id} className="flex">
+                    <ProductItem {...item} />
+                  </div>
                 ))}
               </div>
-            </div>
+            </section>
           ))
         )}
       </div>

@@ -24,19 +24,19 @@ const advantages = [
 export const AboutInfo = () => {
   return (
     <section className="mx-auto max-w-7xl px-4 py-12">
-      <h2 className="text-2xl font-semibold mb-6 text-white">Почему NEVERPC</h2>
+      <h2 className="text-2xl font-semibold mb-6 text-emerald-300">
+        Почему NEVERPC
+      </h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {advantages.map((a) => (
           <div
             key={a.title}
-            className="rounded-2xl border border-zinc-900 bg-neutral-600 text-neutral-100 p-5 hover:shadow-lg transition"
+            className="rounded-2xl border border-zinc-800 bg-gradient-to-br from-[#171821] via-[#101018] to-[#0b0c12] text-zinc-100 p-5 hover:border-emerald-500/50 hover:shadow-xl transition"
           >
-            <div className="text-3xl">{a.icon}</div>
-            <div className="mt-2 font-medium">{a.title}</div>
-            <div className="mt-1 text-neutral-300 text-sm leading-6">
-              {a.desc}
-            </div>
+            <div className="text-3xl mb-1">{a.icon}</div>
+            <div className="mt-1 font-medium text-gray-100">{a.title}</div>
+            <div className="mt-2 text-zinc-300 text-sm leading-6">{a.desc}</div>
           </div>
         ))}
       </div>
