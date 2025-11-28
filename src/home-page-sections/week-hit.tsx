@@ -11,7 +11,7 @@ const hits = [
     title: "ПК Rubio Gaming",
     price: 39999,
     image: hitPcRubio,
-    to: "/product/30",
+    to: "/product/8",
     label: "Игровой ПК",
   },
   {
@@ -19,7 +19,7 @@ const hits = [
     title: "RTX 4070 Super",
     price: 74999,
     image: hitGpu,
-    to: "/product/10",
+    to: "/product/17",
     label: "Видеокарта",
   },
   {
@@ -27,7 +27,7 @@ const hits = [
     title: "ASRock B650",
     price: 15999,
     image: hitMb,
-    to: "/product/24",
+    to: "/product/12",
     label: "Материнская плата",
   },
   {
@@ -35,7 +35,7 @@ const hits = [
     title: "KOTION EACH",
     price: 9999,
     image: hitHeadphones,
-    to: "/product/12",
+    to: "/product/19",
     label: "Гарнитура",
   },
 ];

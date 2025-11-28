@@ -39,7 +39,7 @@ export const Header = () => {
   const hiddenAuthBlock = path === "/auth" || path === "/personal-page";
 
   return (
-    <header className="flex justify-between py-5 sm:px-10 px-3 bg-gray-900">
+    <header className="flex justify-between py-5 sm:px-10 px-3 bg-gray-950">
       <Link to="/" className="flex items-center gap-2">
         <img
           src={logo}

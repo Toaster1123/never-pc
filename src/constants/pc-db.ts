@@ -29,7 +29,7 @@ export const pcData: TPcCategory[] = [
     name: "Компьютеры",
     products: [
       {
-        id: 1,
+        id: 2,
         image: pc1,
         title: "Базовый игровой ПК",
         descriptions:
@@ -61,7 +61,7 @@ export const pcData: TPcCategory[] = [
         ],
       },
       {
-        id: 2,
+        id: 3,
         image: pc2,
         title: "Сбалансированный игровой ПК",
         descriptions:
@@ -93,7 +93,7 @@ export const pcData: TPcCategory[] = [
         ],
       },
       {
-        id: 3,
+        id: 4,
         image: pc3,
         title: "Уникальный игровой ПК",
         descriptions:
@@ -125,7 +125,7 @@ export const pcData: TPcCategory[] = [
         ],
       },
       {
-        id: 4,
+        id: 5,
         image: pc4,
         title: "ПК ультра-мощного класса",
         descriptions:
@@ -157,7 +157,7 @@ export const pcData: TPcCategory[] = [
         ],
       },
       {
-        id: 5,
+        id: 6,
         image: pc5,
         title: "Компьютер HYPERPC CONCEPT",
         descriptions:
@@ -189,7 +189,7 @@ export const pcData: TPcCategory[] = [
         ],
       },
       {
-        id: 6,
+        id: 7,
         image: pc6,
         title: "Компьютер HARD gamer XXL",
         descriptions:
@@ -221,7 +221,7 @@ export const pcData: TPcCategory[] = [
         ],
       },
       {
-        id: 30,
+        id: 8,
         image: pc25,
         title: "ПК Rubio Gaming",
         descriptions:
@@ -255,11 +255,11 @@ export const pcData: TPcCategory[] = [
     ],
   },
   {
-    id: 2,
+    id: 9,
     name: "Комплектующие",
     products: [
       {
-        id: 5,
+        id: 10,
         image: mb1,
         title: "Материнская плата базовая",
         descriptions:
@@ -277,7 +277,7 @@ export const pcData: TPcCategory[] = [
         ],
       },
       {
-        id: 23,
+        id: 11,
         image: mb2,
         title: "Материнская плата AMT AM5",
         descriptions:
@@ -295,7 +295,7 @@ export const pcData: TPcCategory[] = [
         ],
       },
       {
-        id: 24,
+        id: 12,
         image: mb3,
         title: "Материнская плата ASRock",
         descriptions:
@@ -313,7 +313,7 @@ export const pcData: TPcCategory[] = [
         ],
       },
       {
-        id: 6,
+        id: 13,
         image: mb4,
         title: "Материнская плата средняя",
         descriptions:
@@ -331,7 +331,7 @@ export const pcData: TPcCategory[] = [
         ],
       },
       {
-        id: 7,
+        id: 14,
         image: mb5,
         title: "Материнская плата премиум",
         descriptions:
@@ -350,7 +350,7 @@ export const pcData: TPcCategory[] = [
       },
 
       {
-        id: 8,
+        id: 15,
         image: gpu1,
         title: "Видеокарта базовая",
         descriptions:
@@ -368,7 +368,7 @@ export const pcData: TPcCategory[] = [
         ],
       },
       {
-        id: 9,
+        id: 16,
         image: gpu2,
         title: "Видеокарта средняя",
         descriptions:
@@ -386,7 +386,7 @@ export const pcData: TPcCategory[] = [
         ],
       },
       {
-        id: 10,
+        id: 17,
         image: gpu3,
         title: "Видеокарта премиум",
         descriptions:
@@ -406,11 +406,11 @@ export const pcData: TPcCategory[] = [
     ],
   },
   {
-    id: 3,
+    id: 18,
     name: "Аксессуары",
     products: [
       {
-        id: 12,
+        id: 19,
         review: 29,
 
         image: hp1,
@@ -428,7 +428,7 @@ export const pcData: TPcCategory[] = [
         ],
       },
       {
-        id: 13,
+        id: 20,
         image: hp2,
         review: 9,
         title: "Наушники Wired Gaming",
@@ -445,7 +445,7 @@ export const pcData: TPcCategory[] = [
         ],
       },
       {
-        id: 11,
+        id: 21,
         image: kb1,
         review: 29,
         title: "Базовая клавиатура и мышь Ardor Gaming",
@@ -462,7 +462,7 @@ export const pcData: TPcCategory[] = [
         ],
       },
       {
-        id: 12,
+        id: 22,
         image: kb2,
         review: 83,
         title: "Клавиатура и мышь Razer X3",
@@ -479,7 +479,7 @@ export const pcData: TPcCategory[] = [
         ],
       },
       {
-        id: 13,
+        id: 23,
         image: kb3,
         review: 33,
         title: "Профессиональная клавиатура и мышь",
