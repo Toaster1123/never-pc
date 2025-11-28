@@ -51,7 +51,7 @@ export const Catalog = () => {
               <h2 className="text-2xl md:text-3xl font-bold mb-5 text-emerald-300">
                 {section.name}
               </h2>
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+              <div className="flex flex-wrap space-x-6 space-y-12">
                 {section.products.map((item) => (
                   <div key={item.id} className="flex">
                     <ProductItem {...item} />

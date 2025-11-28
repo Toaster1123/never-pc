@@ -22,14 +22,13 @@ export const useFetchProduct = (id: number) => {
 
 export const useFetchProductList = () => {
   const [loading, setLoading] = useState<boolean>(true);
-  const [pcFetchData, setPcFetchData] = useState<TPcCategory[] | null>(null);
+  const [pcFetchData, setPcFetchData] = useState<TPcCategory[] | []>([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const data = pcData;
-        setPcFetchData(data);
+        setPcFetchData(pcData);
       } catch (error) {
         console.error("Error during fetching data:", error);
       } finally {

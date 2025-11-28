@@ -2,26 +2,13 @@ import { useMemo, useState } from "react";
 import { LoginBtn } from "./login-btn";
 import { InputField } from "./input-field";
 import { useNavigate } from "react-router-dom";
+import { loginUser, registerUser } from "@/db/service";
 
 interface AuthErrors {
   email?: string;
   password?: string;
   confirmPassword?: string;
   general?: string;
-}
-
-type User = { email: string; password: string };
-
-const USERS_KEY = "users";
-const CURRENT_USER_KEY = "currentUser";
-
-function readUsers(): User[] {
-  const raw = localStorage.getItem(USERS_KEY);
-  return raw ? JSON.parse(raw) : [];
-}
-
-function writeUsers(users: User[]) {
-  localStorage.setItem(USERS_KEY, JSON.stringify(users));
 }
 
 export const AuthForm = () => {
@@ -51,48 +38,35 @@ export const AuthForm = () => {
     return e;
   }, [email, password, confirmPassword, mode]);
 
-  const handleSubmit = (e?: React.FormEvent) => {
+  const handleSubmit = async (e?: React.FormEvent) => {
     e?.preventDefault();
     setSubmitted(true);
     setErrorsExtra({});
 
-    const hasErrors = Object.keys(errors).length > 0;
-    if (hasErrors) return;
-
-    const users = readUsers();
+    if (Object.keys(errors).length > 0) return;
 
     if (mode === "register") {
-      const exists = users.some(
-        (u) => u.email.toLowerCase() === email.toLowerCase()
-      );
-      if (exists) {
-        setErrorsExtra({ email: "Пользователь с таким email уже существует" });
+      const res = await registerUser(email, password);
+      if ("error" in res) {
+        setErrorsExtra({ email: res.error });
         return;
       }
 
-      const newUsers = [...users, { email, password }];
-      writeUsers(newUsers);
-
-      localStorage.setItem(CURRENT_USER_KEY, JSON.stringify({ email }));
       navigate("/personal-page", { state: { from: "register" } });
       return;
     }
 
     if (mode === "login") {
-      const user = users.find(
-        (u) => u.email.toLowerCase() === email.toLowerCase()
-      );
-      if (!user) {
-        setErrorsExtra({ general: "Пользователь не найден" });
+      const res = await loginUser(email, password);
+
+      if ("error" in res) {
+        if (res.error === "Неверный пароль")
+          setErrorsExtra({ password: res.error });
+        else setErrorsExtra({ general: res.error });
         return;
       }
-      if (user.password !== password) {
-        setErrorsExtra({ password: "Неверный пароль" });
-        return;
-      }
-      localStorage.setItem(CURRENT_USER_KEY, JSON.stringify({ email }));
-      navigate("/personal-page", { replace: true, state: { from: "login" } });
-      return;
+
+      navigate("/personal-page", { state: { from: "login" }, replace: true });
     }
   };
 

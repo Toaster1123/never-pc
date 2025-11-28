@@ -40,7 +40,11 @@ export const ProductDesc: React.FC<Props> = ({ loading, productItem }) => {
               </div>
             )}
             <div className="mt-5">
-              <ModalButton buttons={["Купить", "В кредит"]} loading={loading} />
+              <ModalButton
+                buttons={["В корзину", "В кредит"]}
+                loading={loading}
+                product={productItem}
+              />
             </div>
           </div>
         </div>

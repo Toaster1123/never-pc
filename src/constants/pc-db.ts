@@ -21,8 +21,9 @@ import hp2 from "@/assets/hardware/devices/headphones2.png";
 import kb1 from "@/assets/hardware/devices/keyboard.png";
 import kb2 from "@/assets/hardware/devices/keyboard2.png";
 import kb3 from "@/assets/hardware/devices/keyboard3.png";
+import { TPcCategory } from "@/@types";
 
-export const pcData = [
+export const pcData: TPcCategory[] = [
   {
     id: 1,
     name: "Компьютеры",
@@ -190,7 +191,7 @@ export const pcData = [
       {
         id: 6,
         image: pc6,
-        title: "Компьютер SAINT LEROYALLE",
+        title: "Компьютер HARD gamer XXL",
         descriptions:
           "Производительный универсал: быстрые отклики интерфейса, уверенная работа с большим количеством вкладок и приложений, достаточная мощность для игр на высоких настройках и перспектива модернизации.",
         price: 119999,
@@ -407,10 +408,11 @@ export const pcData = [
   {
     id: 3,
     name: "Аксессуары",
-    review: 7,
     products: [
       {
         id: 12,
+        review: 29,
+
         image: hp1,
         title: "Наушники KOTION EACH",
         descriptions:

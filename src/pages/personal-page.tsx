@@ -1,23 +1,35 @@
+import { User, Purchase } from "@/db";
+import { getCurrentUser, logoutUser } from "@/db/service";
+import { getPurchases } from "@/db/service/purchased";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-type CurrentUser = { email: string };
-
 export const PersonalPage = () => {
   const navigate = useNavigate();
-  const [user, setUser] = useState<CurrentUser | null>(null);
+  const [user, setUser] = useState<User | null>(null);
+  const [purchases, setPurchases] = useState<Purchase[]>([]);
+  const [selectedPurchase, setSelectedPurchase] = useState<Purchase | null>(
+    null
+  );
 
   useEffect(() => {
-    const raw = localStorage.getItem("currentUser");
-    const u = raw ? (JSON.parse(raw) as CurrentUser) : null;
-    setUser(u);
-    if (!u) {
-      navigate("/auth", { replace: true, state: { from: "/personal-page" } });
+    async function load() {
+      const u = await getCurrentUser();
+      if (!u) {
+        navigate("/auth", { replace: true });
+        return;
+      }
+      setUser(u);
+
+      const userPurchases = await getPurchases();
+      setPurchases(userPurchases);
     }
+
+    load();
   }, [navigate]);
 
   const handleLogout = () => {
-    localStorage.removeItem("currentUser");
+    logoutUser();
     navigate("/", { replace: true });
   };
 
@@ -47,22 +59,41 @@ export const PersonalPage = () => {
 
         <section className="rounded-3xl border border-zinc-800 bg-[#111118] shadow-lg p-5 mb-6">
           <h2 className="text-lg font-medium mb-3 text-gray-100">
-            Последний заказ
+            Последние заказы
           </h2>
-          <div className="flex items-center justify-between gap-4">
-            <div>
-              <p className="text-gray-100">Сборка “Ryzen 7 + RTX 4070”</p>
-              <p className="text-zinc-400 text-sm">
-                Статус: в обработке · № 2025-1101
-              </p>
+          {purchases.length === 0 ? (
+            <p className="text-zinc-400">У вас пока нет заказов</p>
+          ) : (
+            <div className="space-y-4">
+              {purchases.map((purchase) => (
+                <div
+                  key={purchase.id}
+                  className="flex items-center justify-between gap-4 border border-zinc-700 rounded-xl p-4"
+                >
+                  <div>
+                    <p className="text-gray-100">
+                      {purchase.items.map((i) => i.product.title).join(", ")}
+                    </p>
+                    <p className="text-zinc-400 text-sm">
+                      Статус: в обработке · № {purchase.id?.slice(0, 8)} ·
+                      Товаров:{" "}
+                      {purchase.items.reduce((sum, i) => sum + i.count, 0)}
+                    </p>
+
+                    <p className="text-zinc-400 text-sm">
+                      Дата: {new Date(purchase.date).toLocaleString("ru-RU")}
+                    </p>
+                  </div>
+                  <button
+                    className="px-3 py-2 rounded-xl bg-emerald-700 text-white text-sm hover:bg-emerald-800 transition"
+                    onClick={() => setSelectedPurchase(purchase)}
+                  >
+                    Детали
+                  </button>
+                </div>
+              ))}
             </div>
-            <button
-              className="px-3 py-2 rounded-xl bg-emerald-700 text-white text-sm hover:bg-emerald-800 transition"
-              onClick={() => navigate("#")}
-            >
-              Детали
-            </button>
-          </div>
+          )}
         </section>
 
         <section className="rounded-3xl border border-zinc-800 bg-[#111118] shadow-lg p-5 mb-8">
@@ -92,6 +123,74 @@ export const PersonalPage = () => {
           </button>
         </div>
       </div>
+
+      {selectedPurchase && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 px-4">
+          <div className="w-full max-w-xl rounded-3xl border border-zinc-800 bg-neutral-900 shadow-2xl p-6">
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <h3 className="text-xl font-semibold text-gray-100">
+                  Заказ № {selectedPurchase.id.slice(0, 8)}
+                </h3>
+                <p className="text-xs text-zinc-400">
+                  Дата:{" "}
+                  {new Date(selectedPurchase.date).toLocaleString("ru-RU")}
+                </p>
+              </div>
+              <button
+                className="text-zinc-400 hover:text-zinc-100 transition text-sm"
+                onClick={() => setSelectedPurchase(null)}
+              >
+                Закрыть
+              </button>
+            </div>
+
+            <div className="space-y-3 max-h-80 overflow-y-auto pr-1">
+              {selectedPurchase.items.map((item) => (
+                <div
+                  key={item.id}
+                  className="flex items-center justify-between gap-3 border border-zinc-800 rounded-2xl px-3 py-2 bg-[#111118]"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-14 h-14 rounded-xl bg-neutral-900 flex items-center justify-center overflow-hidden">
+                      <img
+                        src={item.product.image}
+                        alt={item.product.title}
+                        className="max-h-full max-w-full object-contain"
+                      />
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-100 line-clamp-2">
+                        {item.product.title}
+                      </p>
+                      <p className="text-xs text-zinc-400">
+                        Количество: {item.count}
+                      </p>
+                    </div>
+                  </div>
+                  <p className="text-sm font-semibold text-emerald-400">
+                    {(item.product.price * item.count).toLocaleString("ru-RU")}{" "}
+                    ₽
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            <div className="border-t border-zinc-800 mt-4 pt-3 flex justify-between items-center">
+              <span className="text-sm text-zinc-400">
+                Всего товаров:{" "}
+                {selectedPurchase.items.reduce((sum, i) => sum + i.count, 0)}
+              </span>
+              <span className="text-lg font-bold text-emerald-400">
+                {selectedPurchase.items
+                  .reduce((sum, i) => sum + i.product.price * i.count, 0)
+                  .toLocaleString("ru-RU")}{" "}
+                ₽
+              </span>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

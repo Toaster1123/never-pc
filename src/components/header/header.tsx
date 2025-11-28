@@ -4,18 +4,22 @@ import { useEffect, useRef, useState } from "react";
 import { AlignJustify } from "lucide-react";
 import { headerLinks } from "@/constants";
 import { Link, useLocation } from "react-router-dom";
-
-type CurrentUser = { email: string };
+import { getCurrentUser } from "@/db/service";
 
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [currentUser, setCurrentUser] = useState<CurrentUser | null>(null);
+  const [currentUser, setCurrentUser] = useState<null | { email: string }>(
+    null
+  );
   const path = useLocation().pathname;
   const menuRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    const raw = localStorage.getItem("currentUser");
-    setCurrentUser(raw ? (JSON.parse(raw) as CurrentUser) : null);
+    async function loadUser() {
+      const user = await getCurrentUser();
+      setCurrentUser(user);
+    }
+    loadUser();
   }, [path]);
 
   useEffect(() => {
@@ -48,18 +52,16 @@ export const Header = () => {
       <div ref={menuRef} className="flex gap-4 items-center">
         {!hiddenAuthBlock &&
           (currentUser ? (
-            <div className="flex items-center gap-3">
-              <Link
-                to="/personal-page"
-                className="max-sm:px-3 max-sm:py-2 py-1 px-4 bg-emerald-600/80 hover:bg-emerald-600/70 rounded-2xl text-lg"
-              >
-                <span className="text-white">Личный кабинет</span>
-              </Link>
-            </div>
+            <Link
+              to="/personal-page"
+              className="max-sm:px-3 max-sm:py-2 py-1 px-4 bg-emerald-600/80 hover:bg-emerald-600/70 rounded-2xl text-lg"
+            >
+              <span className="text-white">Личный кабинет</span>
+            </Link>
           ) : (
             <Link
               to="/auth"
-              className="max-sm:px-3 max-sm:py-2 py-1 px-4 select-none focus:outline-none bg-lime-500/80 hover:bg-lime-500/70 rounded-2xl text-lg cursor-pointer"
+              className="max-sm:px-3 max-sm:py-2 py-1 px-4 bg-lime-500/80 hover:bg-lime-500/70 rounded-2xl text-lg"
             >
               <span className="text-white">Войти</span>
             </Link>
@@ -68,13 +70,23 @@ export const Header = () => {
         <AlignJustify
           size={32}
           onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className="text-white text-2xl focus:outline-none cursor-pointer"
+          className="text-white text-2xl cursor-pointer"
         />
+
         {isMenuOpen && (
-          <div className="block select-none absolute top-20 right-0 w-xs bg-gray-900 z-50 gap-4">
-            {headerLinks.map(({ name, link }, id) => (
-              <LinkItem key={id} link={link} name={name} path={path} />
-            ))}
+          <div className="absolute top-20 right-0 w-xs bg-gray-900 z-50">
+            {headerLinks.map(({ name, link }, id) => {
+              const guarded = link === "/cart" && !currentUser;
+
+              return (
+                <LinkItem
+                  key={id}
+                  link={guarded ? "/auth" : link}
+                  name={name}
+                  path={path}
+                />
+              );
+            })}
           </div>
         )}
       </div>

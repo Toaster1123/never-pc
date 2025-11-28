@@ -9,6 +9,9 @@ import { PersonalPage } from "./pages/personal-page";
 import { ProductPage } from "./pages/product-page";
 import { AboutPage } from "./pages/about-page";
 import { PriceListPage } from "./pages/price-list-page";
+import { CartPage } from "./pages/cart-page";
+import { ProtectedCart } from "./routes";
+import { loadInitialDB } from "./db";
 
 function App() {
   const location = useLocation();
@@ -17,67 +20,38 @@ function App() {
     window.scrollTo(0, 0);
   }, [location]);
 
+  loadInitialDB();
+  const routes = [
+    { path: "/", element: <HomePage /> },
+    { path: "/catalog", element: <Catalog /> },
+    { path: "/about", element: <AboutPage /> },
+    { path: "/servise", element: <Servise /> },
+    { path: "/product/:id", element: <ProductPage /> },
+    { path: "/auth", element: <AuthPage /> },
+    { path: "/personal-page", element: <PersonalPage /> },
+    { path: "/price", element: <PriceListPage /> },
+    {
+      path: "/cart",
+      element: (
+        <ProtectedCart>
+          <CartPage />
+        </ProtectedCart>
+      ),
+    },
+  ];
+
   return (
     <div className="flex flex-col min-h-screen bg-neutral-900">
       <Header />
       <main className="flex-grow">
         <Routes>
-          <Route
-            path="/"
-            element={
-              <div className="flex-grow">
-                <HomePage />
-              </div>
-            }
-          />
-          <Route
-            path="/catalog"
-            element={
-              <div className="flex-grow">
-                <Catalog />
-              </div>
-            }
-          />
-          <Route
-            path="/about"
-            element={
-              <div className="flex-grow">
-                <AboutPage />
-              </div>
-            }
-          />
-          <Route
-            path="/servise"
-            element={
-              <div className="flex-grow">
-                <Servise />
-              </div>
-            }
-          />
-          <Route
-            path="/product/:id"
-            element={
-              <div className="flex-grow">
-                <ProductPage />
-              </div>
-            }
-          />
-          <Route
-            path="/auth"
-            element={
-              <div className="flex-grow">
-                <AuthPage />
-              </div>
-            }
-          />
-          <Route
-            path="/personal-page"
-            element={<div className="flex-grow">{<PersonalPage />}</div>}
-          />
-          <Route
-            path="/price"
-            element={<div className="flex-grow">{<PriceListPage />}</div>}
-          />
+          {routes.map(({ path, element }) => (
+            <Route
+              key={path}
+              path={path}
+              element={<div className="flex-grow">{element}</div>}
+            />
+          ))}
         </Routes>
       </main>
       <Footer />
