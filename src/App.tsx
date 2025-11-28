@@ -11,7 +11,6 @@ import { AboutPage } from "./pages/about-page";
 import { PriceListPage } from "./pages/price-list-page";
 import { CartPage } from "./pages/cart-page";
 import { ProtectedCart } from "./routes";
-import { loadInitialDB } from "./db";
 
 function App() {
   const location = useLocation();
@@ -20,7 +19,6 @@ function App() {
     window.scrollTo(0, 0);
   }, [location]);
 
-  loadInitialDB();
   const routes = [
     { path: "/", element: <HomePage /> },
     { path: "/catalog", element: <Catalog /> },

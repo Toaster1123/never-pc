@@ -1,7 +1,7 @@
 import { TProduct } from "@/@types";
 
 export interface User {
-  id?: number;
+  id: string;
   email: string;
   password: string;
 }
@@ -19,149 +19,89 @@ export interface Purchase {
   date: string;
 }
 
-export async function loadInitialDB() {
-  const exists = localStorage.getItem("DB_LOADED");
+type StoreMap = {
+  users: User;
+  cart: CartItem;
+  purchases: Purchase;
+};
 
-  if (exists) return;
+const USERS_KEY = "db_users";
+const CART_KEY = "db_cart";
+const PURCHASES_KEY = "db_purchases";
 
+function readKey<T>(key: string): T[] {
   try {
-    const response = await fetch("db.json");
-    const json = await response.json();
-
-    for (const u of json.users ?? []) {
-      await dbSet("users", u);
-    }
-
-    for (const c of json.cart ?? []) {
-      await dbSet("cart", c);
-    }
-
-    for (const p of json.purchases ?? []) {
-      await dbSet("purchases", p);
-    }
-
-    localStorage.setItem("DB_LOADED", "1");
-    await exportDB();
-  } catch (err) {
-    console.warn("db.json не найден или не удалось прочитать");
+    const raw = localStorage.getItem(key);
+    return raw ? (JSON.parse(raw) as T[]) : [];
+  } catch {
+    return [];
   }
 }
 
-loadInitialDB();
-
-export async function exportDB(): Promise<void> {
-  const users = await dbGetAll<User>("users");
-  const cart = await dbGetAll<CartItem>("cart");
-  const purchases = await dbGetAll<Purchase>("purchases");
-
-  const snapshot = {
-    users,
-    cart,
-    purchases,
-  };
-
-  localStorage.setItem("DB_EXPORT", JSON.stringify(snapshot, null, 2));
+function writeKey<T>(key: string, arr: T[]) {
+  localStorage.setItem(key, JSON.stringify(arr));
 }
 
-export function openDB(): Promise<IDBDatabase> {
-  return new Promise((resolve, reject) => {
-    const request = indexedDB.open("appDB", 2);
-
-    request.onupgradeneeded = () => {
-      const db = request.result;
-
-      // if (!db.objectStoreNames.contains("export")) {
-      //   db.createObjectStore("export", { keyPath: "id" });
-      // }
-
-      if (!db.objectStoreNames.contains("users")) {
-        db.createObjectStore("users", { keyPath: "id", autoIncrement: true });
-      }
-
-      if (!db.objectStoreNames.contains("cart")) {
-        db.createObjectStore("cart", { keyPath: "id" });
-      }
-
-      if (!db.objectStoreNames.contains("purchases")) {
-        db.createObjectStore("purchases", {
-          keyPath: "id",
-          autoIncrement: true,
-        });
-      }
-    };
-
-    request.onsuccess = () => resolve(request.result);
-    request.onerror = () => reject(request.error);
-  });
+function storeNameToKey(store: keyof StoreMap): string {
+  switch (store) {
+    case "users":
+      return USERS_KEY;
+    case "cart":
+      return CART_KEY;
+    case "purchases":
+      return PURCHASES_KEY;
+  }
 }
 
-// export async function updateDBFile(): Promise<void> {
-//   const users = await dbGetAll<User>("users");
-//   const cart = await dbGetAll<CartItem>("cart");
-//   const purchases = await dbGetAll<Purchase>("purchases");
-
-//   const snapshot = {
-//     users,
-//     cart,
-//     purchases,
-//   };
-
-//   const db = await openDB();
-
-//   return new Promise((resolve) => {
-//     const tx = db.transaction("export", "readwrite");
-//     tx.objectStore("export").put({
-//       id: "db-file",
-//       content: JSON.stringify(snapshot, null, 2),
-//       updatedAt: new Date().toISOString(),
-//     });
-
-//     tx.oncomplete = () => resolve();
-//   });
-// }
-
-export async function dbGet<T>(
-  storeName: string,
-  key: IDBValidKey
-): Promise<T | undefined> {
-  const db = await openDB();
-  return new Promise((resolve) => {
-    const tx = db.transaction(storeName, "readonly");
-    const store = tx.objectStore(storeName);
-    const req = store.get(key);
-    req.onsuccess = () => resolve(req.result as T);
-  });
+function generateUUID(): string {
+  if (typeof crypto !== "undefined" && "randomUUID" in crypto)
+    return crypto.randomUUID();
+  return Date.now().toString() + "-" + Math.random().toString(36).substring(2);
 }
 
-export async function dbGetAll<T>(storeName: string): Promise<T[]> {
-  const db = await openDB();
-  return new Promise((resolve) => {
-    const tx = db.transaction(storeName, "readonly");
-    const store = tx.objectStore(storeName);
-    const req = store.getAll();
-    req.onsuccess = () => resolve(req.result as T[]);
-  });
+export async function dbGet<K extends keyof StoreMap>(
+  storeName: K,
+  id: StoreMap[K]["id"]
+): Promise<StoreMap[K] | undefined> {
+  const key = storeNameToKey(storeName);
+  const arr = readKey<StoreMap[K]>(key);
+  return arr.find((item) => item.id === id);
 }
 
-export async function dbSet<T>(storeName: string, value: T): Promise<void> {
-  const db = await openDB();
-  return new Promise((resolve) => {
-    const tx = db.transaction(storeName, "readwrite");
-    const store = tx.objectStore(storeName);
-    store.put(value);
-    tx.oncomplete = () => resolve();
-  });
+export async function dbGetAll<K extends keyof StoreMap>(
+  storeName: K
+): Promise<StoreMap[K][]> {
+  return readKey<StoreMap[K]>(storeNameToKey(storeName));
 }
 
-export async function dbDelete(
-  storeName: string,
-  key: IDBValidKey
+export async function dbSet<K extends keyof StoreMap>(
+  storeName: K,
+  value: StoreMap[K]
 ): Promise<void> {
-  const db = await openDB();
-  return new Promise((resolve) => {
-    const tx = db.transaction(storeName, "readwrite");
-    const store = tx.objectStore(storeName);
-    store.delete(key);
-    tx.oncomplete = () => resolve();
-  });
+  const key = storeNameToKey(storeName);
+  const arr = readKey<StoreMap[K]>(key);
+  let item = value;
+
+  if (!item.id) {
+    item = { ...item, id: generateUUID() } as StoreMap[K];
+    arr.push(item);
+  } else {
+    const idx = arr.findIndex((x) => x.id === item.id);
+    if (idx >= 0) arr[idx] = item;
+    else arr.push(item);
+  }
+
+  writeKey(key, arr);
+}
+
+export async function dbDelete<K extends keyof StoreMap>(
+  storeName: K,
+  id: StoreMap[K]["id"]
+): Promise<void> {
+  const key = storeNameToKey(storeName);
+  const arr = readKey<StoreMap[K]>(key);
+  writeKey(
+    key,
+    arr.filter((item) => item.id !== id)
+  );
 }
